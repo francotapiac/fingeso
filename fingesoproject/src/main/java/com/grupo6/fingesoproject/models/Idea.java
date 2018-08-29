@@ -1,5 +1,8 @@
 package com.grupo6.fingesoproject.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
@@ -12,9 +15,16 @@ public class Idea {
     private String description;
     private Date creationDate;
 
+    @DBRef
     private Participant owner;
+    @JsonIgnore
+    @DBRef
     private List<Evaluation> evaluations;
+    @JsonIgnore
+    @DBRef
     private List<Commentary> commentaries;
+    @JsonIgnore
+    @DBRef
     private List<Challenge> challenges;
 
     public Idea(String description, Date creationDate, Participant owner, List<Evaluation> evaluations, List<Commentary> commentaries, List<Challenge> challenges) {

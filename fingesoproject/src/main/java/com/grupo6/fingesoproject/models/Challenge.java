@@ -1,5 +1,7 @@
 package com.grupo6.fingesoproject.models;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
@@ -15,8 +17,10 @@ public class Challenge {
     private Date startDate;
     private Date endDate;
 
+    @DBRef
     private Evaluator owner;
 
+    //Constructor
     public Challenge(String title, String description, Date creationDate, Date startDate, Date endDate, Evaluator owner, List<Idea> suscribedIdeas, Idea winningIdea) {
         this.title = title;
         this.description = description;
@@ -27,7 +31,9 @@ public class Challenge {
         this.suscribedIdeas = suscribedIdeas;
         this.winningIdea = winningIdea;
     }
+    //Methods
 
+    //Getter and setter
     public String getId() {
         return id;
     }

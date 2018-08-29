@@ -1,5 +1,8 @@
 package com.grupo6.fingesoproject.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.List;
@@ -12,6 +15,8 @@ public class Participant {
     private String email;
     private String password;
 
+    @JsonIgnore
+    @DBRef
     private List<Idea> ideas;
 
     public Participant(String name, String email, String password, List<Idea> ideas) {

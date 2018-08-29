@@ -1,5 +1,7 @@
 package com.grupo6.fingesoproject.models;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -9,15 +11,21 @@ public class Commentary {
     private String id;
     private String text;
 
+    @DBRef
     private Participant owner;
+    @DBRef
     private Idea idea;
 
+    //Constructor
     public Commentary(String text, Participant owner, Idea idea) {
         this.text = text;
         this.owner = owner;
         this.idea = idea;
     }
 
+    //Methods
+
+    //Getter and setter
     public String getId() {
         return id;
     }

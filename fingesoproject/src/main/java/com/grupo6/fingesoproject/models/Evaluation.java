@@ -1,5 +1,7 @@
 package com.grupo6.fingesoproject.models;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
@@ -11,9 +13,12 @@ public class Evaluation {
     private float value;
     private Date creationDate;
 
+    @DBRef
     private Participant owner;
+    @DBRef
     private Idea idea;
 
+    //Constructor
     public Evaluation(float value, Date creationDate, Participant owner, Idea idea) {
         this.value = value;
         this.creationDate = creationDate;
@@ -21,6 +26,9 @@ public class Evaluation {
         this.idea = idea;
     }
 
+    //Methods
+
+    //Getter and setter
     public String getId() {
         return id;
     }
