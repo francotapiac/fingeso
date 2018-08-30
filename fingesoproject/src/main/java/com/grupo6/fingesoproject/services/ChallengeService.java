@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/challenge")
-
 public class ChallengeService {
 
     @Autowired
