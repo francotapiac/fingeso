@@ -2,12 +2,11 @@ package com.grupo6.fingesoproject.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
-@Entity
+@Document
 public class Participant {
     @Id
     private String id;
@@ -19,13 +18,22 @@ public class Participant {
     @DBRef
     private List<Idea> ideas;
 
-    public Participant(String name, String email, String password, List<Idea> ideas) {
+    @JsonIgnore
+    @DBRef
+    private List<Rating> ratings;
+
+    //Constructor
+    public Participant(String name, String email, String password, List<Idea> ideas, List<Rating> ratings) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.ideas = ideas;
+        this.ratings = ratings;
     }
 
+    //Methods
+
+    //Getter and setter
     public String getId() {
         return id;
     }

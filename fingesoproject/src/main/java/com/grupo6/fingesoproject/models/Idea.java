@@ -2,13 +2,12 @@ package com.grupo6.fingesoproject.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id; //este
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Document
 public class Idea {
     @Id
     private String id;
@@ -19,7 +18,7 @@ public class Idea {
     private Participant owner;
     @JsonIgnore
     @DBRef
-    private List<Evaluation> evaluations;
+    private List<Rating> ratings;
     @JsonIgnore
     @DBRef
     private List<Commentary> commentaries;
@@ -27,11 +26,11 @@ public class Idea {
     @DBRef
     private List<Challenge> challenges;
 
-    public Idea(String description, Date creationDate, Participant owner, List<Evaluation> evaluations, List<Commentary> commentaries, List<Challenge> challenges) {
+    public Idea(String description, Date creationDate, Participant owner, List<Rating> ratings, List<Commentary> commentaries, List<Challenge> challenges) {
         this.description = description;
         this.creationDate = creationDate;
         this.owner = owner;
-        this.evaluations = evaluations;
+        this.ratings = ratings;
         this.commentaries = commentaries;
         this.challenges = challenges;
     }
@@ -60,12 +59,12 @@ public class Idea {
         this.owner = owner;
     }
 
-    public List<Evaluation> getEvaluations() {
-        return evaluations;
+    public List<Rating> getRatings() {
+        return ratings;
     }
 
-    public void setEvaluations(List<Evaluation> evaluations) {
-        this.evaluations = evaluations;
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 
     public List<Commentary> getCommentaries() {

@@ -36,7 +36,7 @@ public class CommentaryService {
             return new ResponseEntity<Commentary>(commentary, HttpStatus.NOT_FOUND);
         }
         commentaryRepository.delete(commentary);
-        return new ResponseEntity<Commentary>(commentary, HttpStatus.OK)
+        return new ResponseEntity<Commentary>(commentary, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)

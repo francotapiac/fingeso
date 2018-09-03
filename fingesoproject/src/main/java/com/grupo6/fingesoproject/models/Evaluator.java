@@ -2,12 +2,11 @@ package com.grupo6.fingesoproject.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
-@Entity
+@Document
 public class Evaluator extends Participant{
     @Id
     private String id;
@@ -16,10 +15,9 @@ public class Evaluator extends Participant{
     @DBRef
     private List<Challenge> challenges;
 
-
     //Constructor
-    public Evaluator(String name, String email, String password, List<Idea> ideas, List<Challenge> challenges) {
-        super(name, email, password, ideas);
+    public Evaluator(String name, String email, String password, List<Idea> ideas, List<Rating> ratings, List<Challenge> challenges) {
+        super(name, email, password, ideas, ratings);
         this.challenges = challenges;
     }
 

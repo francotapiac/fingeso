@@ -1,13 +1,12 @@
 package com.grupo6.fingesoproject.models;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Document
 public class Challenge {
     @Id
     private String id;

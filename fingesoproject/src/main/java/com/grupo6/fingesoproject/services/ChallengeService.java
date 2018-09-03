@@ -28,7 +28,7 @@ public class ChallengeService {
         return challengeRepository.findChallengetById(id);
     }
 
-    @RequestMapping(path = "/{id}", value = RequestMethod.DELETE)
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<Challenge> deleteChallenge (@PathVariable String id){
         Challenge challenge = challengeRepository.findChallengetById(id);
