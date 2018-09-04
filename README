@@ -1,0 +1,7 @@
+Compré un servidor en Amsterdam:
+
+-En el sv tengo docker con mongo: Deben descargar robo3t, que es un visualizador de mongodb (en ubuntu se abre raro)
+-Para conectarse el name es mongo-fingeso y el address es 104.248.58.115:27017
+-Para usar postman o la otra wea de apis se usa http://104.248.58.115:1313 y luego la consulta
+
+*** Nuestra página es http://104.248.58.115

@@ -25,13 +25,13 @@ public class ChallengeService {
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Challenge getChallenge(@PathVariable String id){
-        return challengeRepository.findChallengetById(id);
+        return challengeRepository.findChallengeById(id);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<Challenge> deleteChallenge (@PathVariable String id){
-        Challenge challenge = challengeRepository.findChallengetById(id);
+        Challenge challenge = challengeRepository.findChallengeById(id);
         if(challenge == null){
             return  new ResponseEntity<Challenge>(challenge, HttpStatus.NOT_FOUND);
         }

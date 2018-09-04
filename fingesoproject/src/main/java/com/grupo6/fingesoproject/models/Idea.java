@@ -3,11 +3,11 @@ package com.grupo6.fingesoproject.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.annotation.Id; //este
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 import java.util.List;
 
-@Document
+//@Document
 public class Idea {
     @Id
     private String id;
@@ -32,7 +32,7 @@ public class Idea {
         this.owner = owner;
         this.ratings = ratings;
         this.commentaries = commentaries;
-        this.challenges = challenges;
+        //this.challenges = challenges;
     }
 
     public String getDescription() {

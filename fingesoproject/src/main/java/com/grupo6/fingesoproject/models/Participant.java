@@ -3,10 +3,10 @@ package com.grupo6.fingesoproject.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
-@Document
+//@Document
 public class Participant {
     @Id
     private String id;

@@ -2,10 +2,10 @@ package com.grupo6.fingesoproject.models;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
-@Document
+//@Document
 public class Rating {
     @Id
     private String id;
