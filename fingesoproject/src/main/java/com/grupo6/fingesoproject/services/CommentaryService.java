@@ -46,6 +46,9 @@ public class CommentaryService {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Commentary> createCommentary(@RequestBody Commentary commentary){
+        if(commentary.getOwnerBanned() == true){
+            return  new ResponseEntity<Commentary>(commentary, HttpStatus.UNAUTHORIZED);
+        }
         Calendar today = Calendar.getInstance();
         commentary.setCreationDate(today.getTime());
         commentary.setLastUpdate(today.getTime());
@@ -60,9 +63,18 @@ public class CommentaryService {
         if(unUpdatedCommentary == null){
             return new ResponseEntity<Commentary>(unUpdatedCommentary, HttpStatus.NOT_FOUND);
         }
+        if(updatedCommentary.getOwnerBanned() == true){
+            return  new ResponseEntity<Commentary>(unUpdatedCommentary, HttpStatus.UNAUTHORIZED);
+        }
+        if(updatedCommentary.getOwnerBanned() == true){
+            return  new ResponseEntity<Commentary>(unUpdatedCommentary, HttpStatus.UNAUTHORIZED);
+        }
         unUpdatedCommentary.setText(updatedCommentary.getText());
+        unUpdatedCommentary.setOwner(updatedCommentary.getOwner());
+        unUpdatedCommentary.setIdea(updatedCommentary.getIdea());
         Calendar today = Calendar.getInstance();
         unUpdatedCommentary.setLastUpdate(today.getTime());
+
         commentaryRepository.save(unUpdatedCommentary);
         return new ResponseEntity<Commentary>(unUpdatedCommentary, HttpStatus.OK);
     }

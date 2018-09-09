@@ -19,7 +19,7 @@ public class ChallengeService {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<Challenge>> getAllIdeas(){
+    public ResponseEntity<List<Challenge>> getAllChallenge(){
         return new ResponseEntity<List<Challenge>>(challengeRepository.findAll(), HttpStatus.OK);
     }
 
@@ -46,6 +46,9 @@ public class ChallengeService {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Challenge> createChallenge(@RequestBody Challenge challenge){
+        if(challenge.getOwnerBanned() == true){
+            return  new ResponseEntity<Challenge>(challenge, HttpStatus.UNAUTHORIZED);
+        }
         Calendar today = Calendar.getInstance();
         challenge.setCreationDate(today.getTime());
         challenge.setLastUpdate(today.getTime());
@@ -60,10 +63,17 @@ public class ChallengeService {
         if(unUpdatedChallenge == null){
             return new ResponseEntity<Challenge>(unUpdatedChallenge, HttpStatus.NOT_FOUND);
         }
+        if(unUpdatedChallenge.getId() != updatedChallenge.getId()){
+            return  new ResponseEntity<Challenge>(unUpdatedChallenge, HttpStatus.UNAUTHORIZED);
+        }
+        if(updatedChallenge.getOwnerBanned() == true){
+            return  new ResponseEntity<Challenge>(unUpdatedChallenge, HttpStatus.UNAUTHORIZED);
+        }
         unUpdatedChallenge.setDescription(updatedChallenge.getDescription());
         unUpdatedChallenge.setTitle(updatedChallenge.getTitle());
         Calendar today = Calendar.getInstance();
         unUpdatedChallenge.setLastUpdate(today.getTime());
+        unUpdatedChallenge.setOwner(updatedChallenge.getOwner());
         challengeRepository.save(unUpdatedChallenge);
         return new ResponseEntity<Challenge>(unUpdatedChallenge, HttpStatus.OK);
     }

@@ -45,6 +45,9 @@ public class RatingService {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Rating> createRating(@RequestBody Rating rating){
+        if(rating.getOwnerBanned() == true){
+            return  new ResponseEntity<Rating>(rating, HttpStatus.UNAUTHORIZED);
+        }
         Calendar today = Calendar.getInstance();
         rating.setCreationDate(today.getTime());
         rating.setLastUpdate(today.getTime());
@@ -59,7 +62,15 @@ public class RatingService {
         if(unUpdatedRating == null){
             return new ResponseEntity<Rating>(unUpdatedRating, HttpStatus.NOT_FOUND);
         }
+        if(updatedRating.getOwnerBanned() == true){
+            return  new ResponseEntity<Rating>(unUpdatedRating, HttpStatus.UNAUTHORIZED);
+        }
+        if(updatedRating.getOwnerBanned() == true){
+            return  new ResponseEntity<Rating>(unUpdatedRating, HttpStatus.UNAUTHORIZED);
+        }
         unUpdatedRating.setValue(updatedRating.getValue());
+        unUpdatedRating.setIdea(updatedRating.getIdea());
+        unUpdatedRating.setOwner(updatedRating.getOwner());
         Calendar today = Calendar.getInstance();
         unUpdatedRating.setLastUpdate(today.getTime());
         ratingRepository.save(unUpdatedRating);

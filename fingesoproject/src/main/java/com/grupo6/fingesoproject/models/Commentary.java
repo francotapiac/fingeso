@@ -73,4 +73,8 @@ public class Commentary {
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
+    public boolean getOwnerBanned() {
+        return owner.getBanned();
+    }
 }

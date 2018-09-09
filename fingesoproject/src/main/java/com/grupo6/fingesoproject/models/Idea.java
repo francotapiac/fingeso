@@ -13,6 +13,7 @@ public class Idea {
     @Id
     private String id;
     private String description;
+    private String title;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date creationDate;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -92,5 +93,17 @@ public class Idea {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public boolean getOwnerBanned() {
+        return owner.getBanned();
     }
 }

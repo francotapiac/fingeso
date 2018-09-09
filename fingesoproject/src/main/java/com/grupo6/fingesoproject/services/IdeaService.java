@@ -46,6 +46,9 @@ public class IdeaService {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Idea> createIdea(@RequestBody Idea idea){
+        if(idea.getOwnerBanned() == true){
+            return  new ResponseEntity<Idea>(idea, HttpStatus.UNAUTHORIZED);
+        }
         Calendar today = Calendar.getInstance();
         idea.setCreationDate(today.getTime());
         idea.setLastUpdate(today.getTime());
@@ -60,11 +63,28 @@ public class IdeaService {
         if(unUpdatedIdea == null){
             return new ResponseEntity<Idea>(unUpdatedIdea, HttpStatus.NOT_FOUND);
         }
+        if(updatedIdea.getOwnerBanned() == true){
+            return  new ResponseEntity<Idea>(unUpdatedIdea, HttpStatus.UNAUTHORIZED);
+        }
+        if(updatedIdea.getOwnerBanned() == true) {
+            return new ResponseEntity<Idea>(unUpdatedIdea, HttpStatus.UNAUTHORIZED);
+        }
         unUpdatedIdea.setDescription(updatedIdea.getDescription());
-        unUpdatedIdea.setDescription(updatedIdea.getDescription());
+        unUpdatedIdea.setTitle(updatedIdea.getTitle());
+        unUpdatedIdea.setOwner(updatedIdea.getOwner());
         Calendar today = Calendar.getInstance();
         unUpdatedIdea.setLastUpdate(today.getTime());
         ideaRepository.save(unUpdatedIdea);
         return new ResponseEntity<Idea>(unUpdatedIdea, HttpStatus.OK);
+    }
+    @RequestMapping(path = "/searchByOwner/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<Idea>> searchByOwner(@PathVariable String id) {
+        System.out.println(id);
+        System.out.println(ideaRepository.findIdeaByOwner(id));
+        if (ideaRepository.findIdeaByOwner(id).isEmpty() == true) {
+            return new ResponseEntity<List<Idea>>(ideaRepository.findIdeaByOwner(id), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Idea>>(ideaRepository.findIdeaByOwner(id), HttpStatus.OK);
     }
 }

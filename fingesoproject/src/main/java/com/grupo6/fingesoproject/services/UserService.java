@@ -64,6 +64,12 @@ public class UserService {
         if(unUpdatedUser == null){
             return new ResponseEntity<User>(unUpdatedUser, HttpStatus.NOT_FOUND);
         }
+        if(updatedUser.getBanned() == true){
+            return  new ResponseEntity<User>(unUpdatedUser, HttpStatus.UNAUTHORIZED);
+        }
+        if(updatedUser.getBanned() == true){
+            return  new ResponseEntity<User>(unUpdatedUser, HttpStatus.UNAUTHORIZED);
+        }
         unUpdatedUser.setFirstName(updatedUser.getFirstName());
         unUpdatedUser.setLastName(updatedUser.getLastName());
         unUpdatedUser.setEmail(updatedUser.getEmail());
@@ -75,4 +81,53 @@ public class UserService {
         userRepository.save(unUpdatedUser);
         return new ResponseEntity<User>(unUpdatedUser, HttpStatus.OK);
     }
+
+    /*@RequestMapping(path = "/searchUser/{firstName}/{lastName}/{email}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<User>> get_findByLastNameAndFirstName(@PathVariable String firstName, @PathVariable String lastName, @PathVariable String email){
+        System.out.println(firstName);
+        System.out.println(lastName);
+        System.out.println(email);
+        System.out.println("###");
+        System.out.println(userRepository.findAllByLastNameAndFirstNameAndEmail(lastName, firstName, email));
+        System.out.println(userRepository.findAllByLastNameOrFirstNameOrEmail(lastName,firstName, email));
+        System.out.println("-------------------------------------------------");
+        if(userRepository.findAllByLastNameAndFirstNameAndEmail(lastName, firstName, email).isEmpty() == false){
+            return new ResponseEntity<List<User>>(userRepository.findAllByLastNameAndFirstNameAndEmail(lastName, firstName, email), HttpStatus.OK);
+        }
+        System.out.println("1");
+        if(userRepository.findAllByEmailOrFirstNameOrLastName(email, firstName, lastName).isEmpty() == false){
+            return new ResponseEntity<List<User>>(userRepository.findAllByEmailOrFirstNameOrLastName(email, firstName, lastName), HttpStatus.OK);
+        }
+        System.out.println("2");
+        if(userRepository.findAllByLastNameOrFirstNameOrEmail(lastName,firstName, email).isEmpty() == false){
+            return new ResponseEntity<List<User>>(userRepository.findAllByLastNameOrFirstNameOrEmail(lastName, firstName, email), HttpStatus.OK);
+        }
+        System.out.println("3");
+        if(userRepository.findByLastNameOrFirstName(lastName, firstName).isEmpty() == false){
+            return new ResponseEntity<List<User>>(userRepository.findByLastNameOrFirstName(lastName, firstName), HttpStatus.OK);
+        }
+        System.out.println("4");
+        if(userRepository.findAllByEmail(email).isEmpty() == false){
+            return new ResponseEntity<List<User>>(userRepository.findAllByEmail(email), HttpStatus.OK);
+        }
+        if(userRepository.findAllByFirstName(firstName).isEmpty() == false){
+
+        }
+        if(userRepository.findAllByLastName(lastName).isEmpty() == false){
+
+        }
+        /*
+        if(userRepository.findAllByFirstNameOrEmail(firstName, email).isEmpty() == false){
+            return new ResponseEntity<List<User>>(userRepository.findAllByFirstNameOrEmail(firstName, email), HttpStatus.OK);
+        }
+        if(userRepository.findAllByLastNameOrEmail(lastName, email).isEmpty() == false){
+            return new ResponseEntity<List<User>>(userRepository.findAllByLastNameOrEmail(lastName, email), HttpStatus.OK);
+        }
+        System.out.println("NOOOOOT FOUND");
+        return new ResponseEntity<List<User>>(userRepository.findAllByLastNameOrFirstNameOrEmail(lastName,firstName, email), HttpStatus.NOT_FOUND);
+
+    }*/
+
 }
+

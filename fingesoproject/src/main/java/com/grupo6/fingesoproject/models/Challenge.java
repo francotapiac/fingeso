@@ -108,5 +108,8 @@ public class Challenge {
         this.lastUpdate = lastUpdate;
     }
 
+    public boolean getOwnerBanned() {
+        return  owner.getBanned();
+    }
 }
 
