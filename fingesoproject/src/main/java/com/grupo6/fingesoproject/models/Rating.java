@@ -2,28 +2,25 @@ package com.grupo6.fingesoproject.models;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.annotation.Id;
-//import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
 //@Document
 public class Rating {
     @Id
     private String id;
     private float value;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date creationDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private Date lastUpdate;
 
     @DBRef
-    private Participant owner;
+    private User owner;
     @DBRef
     private Idea idea;
-
-    //Constructor
-    public Rating(float value, Date creationDate, Participant owner, Idea idea) {
-        this.value = value;
-        this.creationDate = creationDate;
-        this.owner = owner;
-        this.idea = idea;
-    }
 
     //Methods
 
@@ -52,11 +49,11 @@ public class Rating {
         this.creationDate = creationDate;
     }
 
-    public Participant getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Participant owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
@@ -66,5 +63,13 @@ public class Rating {
 
     public void setIdea(Idea idea) {
         this.idea = idea;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }

@@ -3,6 +3,7 @@ package com.grupo6.fingesoproject.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.annotation.Id; //este
+import org.springframework.format.annotation.DateTimeFormat;
 //import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 import java.util.List;
@@ -12,10 +13,13 @@ public class Idea {
     @Id
     private String id;
     private String description;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date creationDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private Date lastUpdate;
 
     @DBRef
-    private Participant owner;
+    private User owner;
     @JsonIgnore
     @DBRef
     private List<Rating> ratings;
@@ -26,13 +30,12 @@ public class Idea {
     @DBRef
     private List<Challenge> challenges;
 
-    public Idea(String description, Date creationDate, Participant owner, List<Rating> ratings, List<Commentary> commentaries, List<Challenge> challenges) {
-        this.description = description;
-        this.creationDate = creationDate;
-        this.owner = owner;
-        this.ratings = ratings;
-        this.commentaries = commentaries;
-        //this.challenges = challenges;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -51,11 +54,11 @@ public class Idea {
         this.creationDate = creationDate;
     }
 
-    public Participant getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Participant owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
@@ -83,5 +86,11 @@ public class Idea {
         this.challenges = challenges;
     }
 
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
 
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 }

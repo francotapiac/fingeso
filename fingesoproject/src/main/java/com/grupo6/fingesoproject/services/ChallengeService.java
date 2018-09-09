@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -18,14 +19,17 @@ public class ChallengeService {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<Challenge> getAllIdeas(){
-        return this.challengeRepository.findAll();
+    public ResponseEntity<List<Challenge>> getAllIdeas(){
+        return new ResponseEntity<List<Challenge>>(challengeRepository.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Challenge getChallenge(@PathVariable String id){
-        return challengeRepository.findChallengeById(id);
+    public ResponseEntity<Challenge> getChallenge(@PathVariable String id){
+        if(challengeRepository.findChallengeById(id) == null){
+            return new ResponseEntity<Challenge>(challengeRepository.findChallengeById(id), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Challenge>(challengeRepository.findChallengeById(id), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
@@ -41,7 +45,26 @@ public class ChallengeService {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Challenge createChallenge(@RequestBody Challenge challenge){
-        return challengeRepository.save(challenge);
+    public ResponseEntity<Challenge> createChallenge(@RequestBody Challenge challenge){
+        Calendar today = Calendar.getInstance();
+        challenge.setCreationDate(today.getTime());
+        challenge.setLastUpdate(today.getTime());
+        challengeRepository.save(challenge);
+        return new ResponseEntity<Challenge>(challenge, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<Challenge> updateChallenge(@PathVariable String id, @RequestBody Challenge updatedChallenge){
+        Challenge unUpdatedChallenge = challengeRepository.findChallengeById(id);
+        if(unUpdatedChallenge == null){
+            return new ResponseEntity<Challenge>(unUpdatedChallenge, HttpStatus.NOT_FOUND);
+        }
+        unUpdatedChallenge.setDescription(updatedChallenge.getDescription());
+        unUpdatedChallenge.setTitle(updatedChallenge.getTitle());
+        Calendar today = Calendar.getInstance();
+        unUpdatedChallenge.setLastUpdate(today.getTime());
+        challengeRepository.save(unUpdatedChallenge);
+        return new ResponseEntity<Challenge>(unUpdatedChallenge, HttpStatus.OK);
     }
 }

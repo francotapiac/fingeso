@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -17,14 +18,17 @@ public class RatingService {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<Rating> getAllRating(){
-        return ratingRepository.findAll();
+    public ResponseEntity<List<Rating>> getAllRating(){
+        return new ResponseEntity<List<Rating>>(ratingRepository.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public Rating getRating(@PathVariable String id){
-        return ratingRepository.findRatingById(id);
+    public ResponseEntity<Rating> getRating(@PathVariable String id){
+        if(ratingRepository.findRatingById(id) == null){
+            return new ResponseEntity<Rating>(ratingRepository.findRatingById(id), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Rating>(ratingRepository.findRatingById(id), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
@@ -34,12 +38,31 @@ public class RatingService {
         if(rating == null){
             return new ResponseEntity<Rating>(rating, HttpStatus.NOT_FOUND);
         }
+        ratingRepository.delete(rating);
         return new ResponseEntity<Rating>(rating, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Rating createRating(@RequestBody Rating rating){
-        return ratingRepository.save(rating);
+    public ResponseEntity<Rating> createRating(@RequestBody Rating rating){
+        Calendar today = Calendar.getInstance();
+        rating.setCreationDate(today.getTime());
+        rating.setLastUpdate(today.getTime());
+        ratingRepository.save(rating);
+        return new ResponseEntity<Rating>(rating, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<Rating> updateChallenge(@PathVariable String id, @RequestBody Rating updatedRating){
+        Rating unUpdatedRating = ratingRepository.findRatingById(id);
+        if(unUpdatedRating == null){
+            return new ResponseEntity<Rating>(unUpdatedRating, HttpStatus.NOT_FOUND);
+        }
+        unUpdatedRating.setValue(updatedRating.getValue());
+        Calendar today = Calendar.getInstance();
+        unUpdatedRating.setLastUpdate(today.getTime());
+        ratingRepository.save(unUpdatedRating);
+        return new ResponseEntity<Rating>(unUpdatedRating, HttpStatus.OK);
     }
 }

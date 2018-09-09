@@ -2,6 +2,9 @@ package com.grupo6.fingesoproject.models;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.annotation.Id;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 //import org.springframework.data.mongodb.core.mapping.Document;
 
 //@Document
@@ -9,18 +12,16 @@ public class Commentary {
     @Id
     private String id;
     private String text;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private Date creationDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private Date lastUpdate;
 
     @DBRef
-    private Participant owner;
+    private User owner;
     @DBRef
     private Idea idea;
 
-    //Constructor
-    public Commentary(String text, Participant owner, Idea idea) {
-        this.text = text;
-        this.owner = owner;
-        this.idea = idea;
-    }
 
     //Methods
 
@@ -41,11 +42,11 @@ public class Commentary {
         this.text = text;
     }
 
-    public Participant getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Participant owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
@@ -55,5 +56,21 @@ public class Commentary {
 
     public void setIdea(Idea idea) {
         this.idea = idea;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }
