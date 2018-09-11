@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Calendar;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
 @RestController
 @RequestMapping(value = "/challenge")
 public class ChallengeService {
@@ -54,6 +55,27 @@ public class ChallengeService {
         challenge.setLastUpdate(today.getTime());
         challengeRepository.save(challenge);
         return new ResponseEntity<Challenge>(challenge, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(path = "/searchByDescription/{title}/{description}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<Challenge>> searchByDescription(@PathVariable String title, @PathVariable String description) {
+        if(title.equals("") && description.equals("")){
+            return new ResponseEntity<List<Challenge>>(challengeRepository.findAll(), HttpStatus.OK);
+        }
+        if(!challengeRepository.findByDescription(description).isEmpty() == true) {
+            return new ResponseEntity<List<Challenge>>(challengeRepository.findByDescriptionLike(description), HttpStatus.OK);
+        }
+        if(!challengeRepository.findByTitle(title).isEmpty()){
+            return new ResponseEntity<List<Challenge>>(challengeRepository.findByTitle(title), HttpStatus.OK);
+        }
+        if(!challengeRepository.findByTitleLike(title).isEmpty()){
+            return new ResponseEntity<List<Challenge>>(challengeRepository.findByTitleLike(title), HttpStatus.OK);
+        }
+        if(!challengeRepository.findByDescriptionLike(description).isEmpty() == true) {
+            return new ResponseEntity<List<Challenge>>(challengeRepository.findByDescriptionLike(description), HttpStatus.OK);
+        }
+        return new ResponseEntity<List<Challenge>>(challengeRepository.findByDescriptionLike(description), HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)

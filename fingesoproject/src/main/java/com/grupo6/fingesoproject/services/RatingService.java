@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Calendar;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
 @RestController
 @RequestMapping(value = "/rating")
 public class RatingService {

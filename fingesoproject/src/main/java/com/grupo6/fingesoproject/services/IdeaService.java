@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Calendar;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
 @RestController
 @RequestMapping(value = "/idea")
 public class IdeaService {
@@ -92,8 +93,9 @@ public class IdeaService {
     @RequestMapping(path = "/searchByDescription/{title}/{description}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Idea>> searchByDescription(@PathVariable String title, @PathVariable String description) {
-        System.out.println(description);
-        System.out.println(ideaRepository.findByDescriptionLike(description));
+        if(title.equals("") && description.equals("")){
+            return new ResponseEntity<List<Idea>>(ideaRepository.findAll(), HttpStatus.OK);
+        }
         if(!ideaRepository.findByDescription(description).isEmpty() == true) {
             return new ResponseEntity<List<Idea>>(ideaRepository.findByDescriptionLike(description), HttpStatus.OK);
         }

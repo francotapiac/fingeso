@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Calendar;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
 @RestController
 @RequestMapping(value = "/user")
 public class UserService {
@@ -64,9 +65,6 @@ public class UserService {
         if(unUpdatedUser == null){
             return new ResponseEntity<User>(unUpdatedUser, HttpStatus.NOT_FOUND);
         }
-        /*if(updatedUser.getBanned() == true){
-            return  new ResponseEntity<User>(unUpdatedUser, HttpStatus.UNAUTHORIZED);
-        }*/
 
         unUpdatedUser.setFirstName(updatedUser.getFirstName());
         unUpdatedUser.setLastName(updatedUser.getLastName());
@@ -83,6 +81,9 @@ public class UserService {
     @RequestMapping(path = "/searchUser/{firstName}/{lastName}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<User>> get_findByLastNameAndFirstName(@PathVariable String firstName, @PathVariable String lastName) {
+        if(firstName.equals("") && lastName.equals("")){
+            return new ResponseEntity<List<User>>(userRepository.findAll(), HttpStatus.OK );
+        }
         if (userRepository.findAllByLastNameAndFirstName(lastName, firstName).isEmpty() == false) {
             return new ResponseEntity<List<User>>(userRepository.findAllByLastNameAndFirstName(lastName, firstName), HttpStatus.OK);
         }
