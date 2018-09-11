@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.List;
 
 public interface UserRepository extends MongoRepository<User, String> {
@@ -19,5 +20,6 @@ public interface UserRepository extends MongoRepository<User, String> {
     public List<User> findAllByFirstName(String firstName);
     public List<User> findAllByLastName(String lastName);
     public List<User> findAllByEmail(String email);
-    public  List<User> findByLastNameOrFirstName(String lastName, String firstName);
+    public List<User> findByLastNameOrFirstName(String lastName, String firstName);
+    public List<User> findAllByLastNameAndFirstName(String lastName, String firstName);
 }
