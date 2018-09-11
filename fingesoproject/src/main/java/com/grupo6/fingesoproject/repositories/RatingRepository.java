@@ -4,5 +4,6 @@ import com.grupo6.fingesoproject.models.Rating;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface RatingRepository extends MongoRepository<Rating, String> {
-    public Rating findRatingById(String id);
+    public User findRatingById(String id);
+    public User findRatingByValue(float value);
 }
