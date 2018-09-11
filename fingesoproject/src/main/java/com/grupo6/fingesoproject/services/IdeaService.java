@@ -46,9 +46,9 @@ public class IdeaService {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Idea> createIdea(@RequestBody Idea idea){
-        if(idea.getOwnerBanned() == true){
+        /*if(idea.getOwnerBanned() == true){
             return  new ResponseEntity<Idea>(idea, HttpStatus.UNAUTHORIZED);
-        }
+        }*/
         Calendar today = Calendar.getInstance();
         idea.setCreationDate(today.getTime());
         idea.setLastUpdate(today.getTime());
@@ -63,12 +63,9 @@ public class IdeaService {
         if(unUpdatedIdea == null){
             return new ResponseEntity<Idea>(unUpdatedIdea, HttpStatus.NOT_FOUND);
         }
-        if(updatedIdea.getOwnerBanned() == true){
+        /*if(updatedIdea.getOwnerBanned() == true){
             return  new ResponseEntity<Idea>(unUpdatedIdea, HttpStatus.UNAUTHORIZED);
-        }
-        if(updatedIdea.getOwnerBanned() == true) {
-            return new ResponseEntity<Idea>(unUpdatedIdea, HttpStatus.UNAUTHORIZED);
-        }
+        }*/
         unUpdatedIdea.setDescription(updatedIdea.getDescription());
         unUpdatedIdea.setTitle(updatedIdea.getTitle());
         unUpdatedIdea.setOwner(updatedIdea.getOwner());

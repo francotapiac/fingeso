@@ -63,12 +63,9 @@ public class ChallengeService {
         if(unUpdatedChallenge == null){
             return new ResponseEntity<Challenge>(unUpdatedChallenge, HttpStatus.NOT_FOUND);
         }
-        if(unUpdatedChallenge.getId() != updatedChallenge.getId()){
+        /*if(updatedChallenge.getOwnerBanned() == true){
             return  new ResponseEntity<Challenge>(unUpdatedChallenge, HttpStatus.UNAUTHORIZED);
-        }
-        if(updatedChallenge.getOwnerBanned() == true){
-            return  new ResponseEntity<Challenge>(unUpdatedChallenge, HttpStatus.UNAUTHORIZED);
-        }
+        }*/
         unUpdatedChallenge.setDescription(updatedChallenge.getDescription());
         unUpdatedChallenge.setTitle(updatedChallenge.getTitle());
         Calendar today = Calendar.getInstance();

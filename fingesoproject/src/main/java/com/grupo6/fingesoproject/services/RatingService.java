@@ -62,12 +62,9 @@ public class RatingService {
         if(unUpdatedRating == null){
             return new ResponseEntity<Rating>(unUpdatedRating, HttpStatus.NOT_FOUND);
         }
-        if(updatedRating.getOwnerBanned() == true){
+        /*if(updatedRating.getOwnerBanned() == true){
             return  new ResponseEntity<Rating>(unUpdatedRating, HttpStatus.UNAUTHORIZED);
-        }
-        if(updatedRating.getOwnerBanned() == true){
-            return  new ResponseEntity<Rating>(unUpdatedRating, HttpStatus.UNAUTHORIZED);
-        }
+        }*/
         unUpdatedRating.setValue(updatedRating.getValue());
         unUpdatedRating.setIdea(updatedRating.getIdea());
         unUpdatedRating.setOwner(updatedRating.getOwner());
