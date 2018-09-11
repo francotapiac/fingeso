@@ -64,12 +64,10 @@ public class UserService {
         if(unUpdatedUser == null){
             return new ResponseEntity<User>(unUpdatedUser, HttpStatus.NOT_FOUND);
         }
-        if(updatedUser.getBanned() == true){
+        /*if(updatedUser.getBanned() == true){
             return  new ResponseEntity<User>(unUpdatedUser, HttpStatus.UNAUTHORIZED);
-        }
-        if(updatedUser.getBanned() == true){
-            return  new ResponseEntity<User>(unUpdatedUser, HttpStatus.UNAUTHORIZED);
-        }
+        }*/
+
         unUpdatedUser.setFirstName(updatedUser.getFirstName());
         unUpdatedUser.setLastName(updatedUser.getLastName());
         unUpdatedUser.setEmail(updatedUser.getEmail());
