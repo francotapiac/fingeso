@@ -83,24 +83,12 @@ public class UserService {
     @RequestMapping(path = "/searchUser/{firstName}/{lastName}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<User>> get_findByLastNameAndFirstName(@PathVariable String firstName, @PathVariable String lastName) {
-        System.out.println(firstName);
-        System.out.println(lastName);
-        System.out.println("###");
-        System.out.println("-------------------------------------------------");
         if (userRepository.findAllByLastNameAndFirstName(lastName, firstName).isEmpty() == false) {
             return new ResponseEntity<List<User>>(userRepository.findAllByLastNameAndFirstName(lastName, firstName), HttpStatus.OK);
         }
-        System.out.println("1");
-
-        System.out.println("2");
-        /*if(userRepository.findAllByLastNameOrFirstName(lastName,firstName).isEmpty() == false){
-            return new ResponseEntity<List<User>>(userRepository.findAllByLastNameOrFirstNameOrEmail(lastName, firstName), HttpStatus.OK);
-        }*/
-        System.out.println("3");
         if (userRepository.findByLastNameOrFirstName(lastName, firstName).isEmpty() == false) {
             return new ResponseEntity<List<User>>(userRepository.findByLastNameOrFirstName(lastName, firstName), HttpStatus.OK);
         }
-        System.out.println("4");
         return new ResponseEntity<List<User>>(userRepository.findByLastNameOrFirstName(lastName, firstName), HttpStatus.NOT_FOUND);
     }
 

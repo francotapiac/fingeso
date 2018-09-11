@@ -2,6 +2,7 @@ package com.grupo6.fingesoproject.services;
 
 import com.grupo6.fingesoproject.models.Idea;
 import com.grupo6.fingesoproject.repositories.IdeaRepository;
+import com.grupo6.fingesoproject.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ public class IdeaService {
 
     @Autowired
     private IdeaRepository ideaRepository;
+    private UserRepository userRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
@@ -74,14 +76,51 @@ public class IdeaService {
         ideaRepository.save(unUpdatedIdea);
         return new ResponseEntity<Idea>(unUpdatedIdea, HttpStatus.OK);
     }
+
+
+
+
     @RequestMapping(path = "/searchByOwner/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Idea>> searchByOwner(@PathVariable String id) {
-        System.out.println(id);
-        System.out.println(ideaRepository.findIdeaByOwner(id));
         if (ideaRepository.findIdeaByOwner(id).isEmpty() == true) {
             return new ResponseEntity<List<Idea>>(ideaRepository.findIdeaByOwner(id), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List<Idea>>(ideaRepository.findIdeaByOwner(id), HttpStatus.OK);
     }
+
+    @RequestMapping(path = "/searchByDescription/{title}/{description}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<Idea>> searchByDescription(@PathVariable String title, @PathVariable String description) {
+        System.out.println(description);
+        System.out.println(ideaRepository.findByDescriptionLike(description));
+        if(!ideaRepository.findByDescription(description).isEmpty() == true) {
+            return new ResponseEntity<List<Idea>>(ideaRepository.findByDescriptionLike(description), HttpStatus.OK);
+        }
+        if(!ideaRepository.findByTitle(title).isEmpty()){
+            return new ResponseEntity<List<Idea>>(ideaRepository.findByTitle(title), HttpStatus.OK);
+        }
+        if(!ideaRepository.findByTitleLike(title).isEmpty()){
+            return new ResponseEntity<List<Idea>>(ideaRepository.findByTitleLike(title), HttpStatus.OK);
+        }
+        if(!ideaRepository.findByDescriptionLike(description).isEmpty() == true) {
+            return new ResponseEntity<List<Idea>>(ideaRepository.findByDescriptionLike(description), HttpStatus.OK);
+        }
+        return new ResponseEntity<List<Idea>>(ideaRepository.findByDescriptionLike(description), HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(path = "/{id}/{idUser}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity<Idea> deleteService(@PathVariable String id, @PathVariable String idUser){
+        Idea idea = ideaRepository.findIdeaById(id);
+        if(ideaRepository.findByOwner(id) != userRepository.findUserById(idUser)){
+            return new ResponseEntity<Idea>(idea, HttpStatus.FORBIDDEN);
+        }
+        if(idea == null){
+            return new ResponseEntity<Idea>(idea, HttpStatus.NOT_FOUND);
+        }
+        ideaRepository.delete(idea);
+        return new ResponseEntity<Idea>(idea, HttpStatus.OK);
+    }
+
 }
