@@ -6,18 +6,20 @@ import { HomeComponent } from './home/home.component';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { PerfilComponent } from './perfil/perfil.component';
-import { AportesComponent } from './aportes/aportes.component';
 import { NoticiaComponent } from './noticia/noticia.component';
 import { ProximoEventoComponent } from './proximo-evento/proximo-evento.component';
 import { BuscadorIdeaRetoComponent } from './buscador-idea-reto/buscador-idea-reto.component';
 import { FormularioIdeaComponent } from './formulario-idea/formulario-idea.component';
 import { FormularioRetoComponent } from './formulario-reto/formulario-reto.component';
 import { BarraNavegacionComponent } from './barra-navegacion/barra-navegacion.component';
-
 import { RegistroComponent } from './registro/registro.component';
+import { LoginComponent } from './login/login.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+
 const appRoutes: Routes =[
   {path: 'home', component: HomeComponent},
   {path: 'idea', component: FormularioIdeaComponent},
+  {path: 'reto', component: FormularioIdeaComponent},
 ];
 
 
@@ -26,7 +28,6 @@ const appRoutes: Routes =[
     AppComponent,
     HomeComponent,
     PerfilComponent,
-    AportesComponent,
     NoticiaComponent,
     ProximoEventoComponent,
     BuscadorIdeaRetoComponent,
@@ -34,9 +35,11 @@ const appRoutes: Routes =[
     FormularioRetoComponent,
     BarraNavegacionComponent,
     RegistroComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
+    NgxPaginationModule,
     RouterModule,
     HttpClientModule,
     FormsModule,
